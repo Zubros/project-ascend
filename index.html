@@ -4,6 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Project Ascend — Naimul</title>
+<meta name="description" content="Your transformation roadmap — lean, sharp, healthy. For keeps." />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#141318" />
+<link rel="icon" href="favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Ascend" />
 <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('opc3_mode')||'dark');}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -641,6 +650,7 @@ footer{border-top:1px solid var(--line);padding:var(--s7) 0 var(--s8)}
 </div></footer>
 
 <script>
+  if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
   (function(){var s=95,t=57,c=95,p=Math.max(4,Math.min(100,((s-c)/(s-t))*100));var b=document.getElementById('bar');if(b)b.style.width=p+'%';})();
   (function(){var bx=document.querySelectorAll('#checklist input[type=checkbox]');bx.forEach(function(b){var k='opc3_'+b.dataset.k;try{if(localStorage.getItem(k)==='1')b.checked=true;}catch(e){}b.addEventListener('change',function(){try{localStorage.setItem(k,b.checked?'1':'0');}catch(e){}buzz();var all=true;bx.forEach(function(c){if(!c.checked)all=false;});if(all){confetti();toast('Day complete! 🔥');}});});var r=document.getElementById('resetBtn');if(r)r.addEventListener('click',function(){bx.forEach(function(b){b.checked=false;try{localStorage.setItem('opc3_'+b.dataset.k,'0');}catch(e){}});});})();
   (function(){if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelectorAll('.rv').forEach(function(e){e.classList.add('in');});return;}var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target);}});},{threshold:.1});document.querySelectorAll('.rv').forEach(function(e){o.observe(e);});})();
