@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project Ascend — Naimul</title>
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('opc3_mode')||'dark');}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* Hallmark · macrostructure: Marquee Hero · tone: atmospheric cinematic athletic · anchor hue: warm gold
+ * Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V5 */
+:root{
+  --bg:oklch(15% 0.012 64);--bg-2:oklch(18.5% 0.015 64);--bg-3:oklch(23% 0.018 62);
+  --ink:oklch(94% 0.012 82);--ink-2:oklch(74% 0.012 78);--ink-3:oklch(57% 0.012 72);
+  --line:oklch(31% 0.016 66);--line-2:oklch(26% 0.014 66);
+  --gold:oklch(82% 0.135 80);--ember:oklch(68% 0.17 52);--on-gold:oklch(20% 0.03 70);
+  --display:'Outfit',system-ui,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif;
+  --t-mega:clamp(2.6rem,7vw,5.4rem);--t-h2:clamp(1.7rem,4.5vw,2.7rem);--t-display:clamp(2rem,6vw,3.6rem);
+  --t-lead:clamp(1.05rem,2vw,1.25rem);--t-body:1.04rem;--t-sm:0.92rem;--t-xs:0.72rem;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;
+  --ease:cubic-bezier(.16,1,.3,1);--dur:.6s;
+}
+html[data-theme="light"]{
+  --bg:oklch(96.5% 0.008 85);--bg-2:oklch(99.3% 0.004 85);--bg-3:oklch(93.5% 0.01 82);
+  --ink:oklch(26% 0.014 60);--ink-2:oklch(43% 0.012 60);--ink-3:oklch(58% 0.01 62);
+  --line:oklch(88% 0.01 82);--line-2:oklch(92.5% 0.008 82);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:var(--t-body);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s var(--ease),color .3s var(--ease)}
+.atmos{position:fixed;inset:0;z-index:0;pointer-events:none}
+.atmos .glow{position:absolute;top:-25vh;left:50%;transform:translateX(-50%);width:120vw;height:80vh;background:radial-gradient(ellipse at center,oklch(68% 0.17 52 / .13),transparent 68%)}
+.atmos .vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,transparent 55%,oklch(10% 0.01 60 / .55) 100%)}
+.atmos .grain{position:absolute;inset:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+html[data-theme="light"] .atmos .vig{display:none}
+html[data-theme="light"] .atmos .glow{opacity:.45}
+html[data-theme="light"] .atmos .grain{opacity:.025}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:0 var(--s5)}
+
+.readbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:60}
+.readbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ember),var(--gold));transition:width .12s linear}
+
+nav{position:sticky;top:var(--s4);z-index:50;display:flex;justify-content:center;padding:0 var(--s4);margin-bottom:var(--s6)}
+.pill{display:flex;align-items:center;gap:var(--s2) var(--s4);flex-wrap:wrap;justify-content:center;background:oklch(18.5% 0.015 64 / .72);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:100px;padding:var(--s2) var(--s5);box-shadow:0 20px 50px -20px oklch(0% 0 0 / .5)}
+html[data-theme="light"] .pill{background:oklch(99.3% 0.004 85 / .82)}
+.pill .nm{font-family:var(--display);font-weight:800;font-size:.82rem;color:var(--gold)}
+.pill a{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--ink-2);text-decoration:none;font-weight:600;white-space:nowrap;transition:color .2s var(--ease)}
+.pill a:hover,.pill a.active{color:var(--gold)}
+.mode{background:var(--bg-3);border:1px solid var(--line);color:var(--ink);border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:14px;line-height:1;padding:0;flex-shrink:0}
+.menu-btn{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:38px;height:34px;background:var(--bg-3);border:1px solid var(--line);border-radius:10px;cursor:pointer;padding:0}
+.menu-btn span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:.2s var(--ease)}
+.menu-overlay{position:fixed;inset:0;z-index:80;background:oklch(8% 0.01 60 / .55);opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s}
+.menu-overlay.open{opacity:1;visibility:visible}
+.menu-panel{position:absolute;top:0;right:0;bottom:0;width:76vw;max-width:310px;background:var(--bg-2);border-left:1px solid var(--line);box-shadow:-30px 0 70px -25px oklch(0% 0 0 / .7);transform:translateX(100%);transition:transform .35s var(--ease);padding:var(--s8) var(--s6) var(--s6);overflow-y:auto}
+.menu-overlay.open .menu-panel{transform:none}
+.menu-close{position:absolute;top:var(--s5);right:var(--s5);background:none;border:1px solid var(--line);color:var(--ink);border-radius:50%;width:40px;height:40px;font-size:1.4rem;cursor:pointer;line-height:1}
+.menu-links{display:flex;flex-direction:column;margin-top:var(--s5)}
+.menu-links a{font-family:var(--display);font-weight:700;font-size:1.3rem;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:var(--s3) 0;border-bottom:1px solid var(--line-2);transition:color .2s var(--ease),padding-left .2s var(--ease)}
+.menu-links a:last-child{border-bottom:0}
+.menu-links a:active,.menu-links a:hover{color:var(--gold);padding-left:var(--s2)}
+.btn-gold,.reset,.mode{transition:transform .12s var(--ease),background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
+.btn-gold:active,.reset:active,.mode:active{transform:translateY(1px)}
+
+header{padding:var(--s7) 0 var(--s8);text-align:center}
+.eyebrow{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.32em;color:var(--ember);font-weight:700;margin-bottom:var(--s5)}
+h1.hero{font-family:var(--display);font-weight:800;font-size:var(--t-mega);line-height:.94;letter-spacing:0;text-transform:uppercase;word-break:normal;overflow-wrap:normal;min-width:0}
+h1.hero .l2{display:block;color:transparent;background:linear-gradient(100deg,var(--gold),var(--ember));-webkit-background-clip:text;background-clip:text}
+.hero-sub{max-width:46ch;margin:var(--s6) auto 0;font-size:var(--t-lead);color:var(--ink-2)}
+.hero-sub b{color:var(--ink);font-weight:600}
+
+.ledger{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:var(--s7)}
+.ledger .c{background:var(--bg-2);padding:var(--s5) var(--s4);text-align:left}
+.ledger .k{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);font-weight:600}
+.ledger .v{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,4.5vw,2.3rem);line-height:1;margin-top:var(--s3)}
+.ledger .v.g{color:var(--gold)}
+.ledger .u{font-size:var(--t-sm);color:var(--ink-3);margin-top:var(--s2)}
+
+.scale{margin-top:var(--s6);text-align:left}
+.scale .lbl{display:flex;justify-content:space-between;font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);font-weight:600;margin-bottom:var(--s3)}
+.track{height:10px;border-radius:20px;background:var(--bg-3);border:1px solid var(--line);overflow:hidden;position:relative}
+.track i{position:absolute;inset:0 auto 0 0;width:6%;border-radius:20px;background:linear-gradient(90deg,var(--ember),var(--gold))}
+.ticks{display:flex;justify-content:space-between;margin-top:var(--s2);font-size:var(--t-xs);color:var(--ink-3)}
+
+section{padding:var(--s8) 0;border-top:1px solid var(--line-2)}
+.tag{display:inline-block;font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.18em;color:var(--gold);font-weight:700;margin-bottom:var(--s3)}
+.tag .num{font-family:var(--display);font-weight:700}
+h2{font-family:var(--display);font-weight:700;font-size:var(--t-h2);line-height:1.05;letter-spacing:0;margin-bottom:var(--s4);overflow-wrap:anywhere;min-width:0}
+.lead{font-size:var(--t-lead);color:var(--ink-2);max-width:52ch;margin-bottom:var(--s6)}
+.lead b{color:var(--ink);font-weight:600}
+h3{font-family:var(--display);font-weight:600;font-size:1.12rem;margin-bottom:var(--s3)}
+
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s7)}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s6)}
+
+ul.list{list-style:none}
+ul.list li{position:relative;padding:var(--s2) 0 var(--s2) var(--s5);border-bottom:1px solid var(--line-2);font-size:var(--t-body);color:var(--ink-2)}
+ul.list li:last-child{border-bottom:0}
+ul.list li::before{content:"";position:absolute;left:0;top:15px;width:12px;height:2px;background:var(--gold)}
+ul.list li b{color:var(--ink);font-weight:600}
+
+.levers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.lever{padding:0 var(--s5);border-left:1px solid var(--line);transition:transform .2s var(--ease)}
+.lever:first-child{padding-left:0;border-left:0}
+.lever:hover{transform:translateY(-3px)}
+.lever .rn{font-family:var(--display);font-weight:800;font-size:2.2rem;color:transparent;background:linear-gradient(180deg,var(--gold),var(--ember));-webkit-background-clip:text;background-clip:text;line-height:1}
+.lever h4{font-family:var(--display);font-weight:700;font-size:1.3rem;text-transform:uppercase;margin:var(--s3) 0 var(--s2)}
+.lever p{font-size:var(--t-sm);color:var(--ink-2);line-height:1.5}
+.lever p b{color:var(--ink);font-weight:600}
+
+.phase{display:grid;grid-template-columns:74px 1fr;gap:var(--s4);padding:0 0 var(--s5);position:relative;margin-left:var(--s2);border-left:1px solid var(--line);padding-left:var(--s5)}
+.phase::before{content:"";position:absolute;left:-6px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--gold)}
+.phase .pn{font-family:var(--display);font-weight:800;font-size:1.4rem;color:var(--gold)}
+.phase .pn small{display:block;font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);margin-top:var(--s1);font-weight:600;font-family:var(--body)}
+.phase h4{font-family:var(--display);font-weight:600;font-size:1.05rem;margin-bottom:var(--s1)}
+.phase p{font-size:var(--t-sm);color:var(--ink-2)}.phase p b{color:var(--ink);font-weight:600}
+
+.meal{border-top:1px solid var(--line);padding:var(--s4) 0}
+.meal:last-of-type{border-bottom:1px solid var(--line)}
+.meal .mh{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);margin-bottom:var(--s2)}
+.meal .mh b{font-family:var(--display);font-weight:600;font-size:1.08rem}
+.meal .mh .cal{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--gold);font-weight:600;white-space:nowrap}
+.meal .row{display:flex;justify-content:space-between;gap:var(--s4);padding:var(--s2) 0;font-size:var(--t-body);color:var(--ink-2)}
+.meal .row .amt{color:var(--ink);font-weight:600;white-space:nowrap}
+.macros{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s6);margin-bottom:var(--s5);font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);font-weight:600}
+.macros b{display:block;font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--gold);letter-spacing:0;text-transform:none;margin-top:2px}
+
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--s2);margin:var(--s5) 0}
+.wd{background:var(--bg-2);border:1px solid var(--line-2);border-radius:10px;padding:var(--s4) var(--s2);text-align:center}
+.wd .d{font-size:var(--t-xs);text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.wd .a{margin-top:var(--s2);font-size:var(--t-sm);font-weight:600}
+.wd.train{border-color:var(--gold);background:oklch(82% 0.135 80 / .08)}.wd.train .a{color:var(--gold)}
+.exrow{display:flex;justify-content:space-between;gap:var(--s4);padding:var(--s3) 0;border-bottom:1px solid var(--line-2);font-size:var(--t-body);color:var(--ink-2)}
+.exrow:last-child{border-bottom:0}.exrow b{color:var(--ink);font-weight:600}.exrow .s{color:var(--gold);font-weight:600;white-space:nowrap}
+
+.step{display:grid;grid-template-columns:auto 1fr;gap:var(--s4);padding:var(--s3) 0;border-bottom:1px solid var(--line-2)}
+.step:last-child{border-bottom:0}
+.step .sn{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--gold)}
+.step .t{font-size:var(--t-body);color:var(--ink-2)}.step .t b{color:var(--ink);font-weight:600}
+
+.note{padding:var(--s4) var(--s5);margin-top:var(--s5);border-radius:12px;font-size:var(--t-sm);color:var(--ink-2);border:1px solid var(--line);background:var(--bg-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-color:oklch(66% 0.16 38 / .5);background:oklch(66% 0.16 38 / .08)}
+.note.warn b{color:var(--ember)}
+.note.good{border-color:oklch(82% 0.135 80 / .4);background:oklch(82% 0.135 80 / .07)}.note.good b{color:var(--gold)}
+
+.pull{padding:var(--s8) 0;text-align:center;border-top:1px solid var(--line-2)}
+.pull p{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:var(--t-display);line-height:1;letter-spacing:0;overflow-wrap:anywhere}
+.pull .em{color:transparent;background:linear-gradient(100deg,var(--gold),var(--ember));-webkit-background-clip:text;background-clip:text}
+
+.check{border-top:1px solid var(--line)}
+.ci{display:flex;align-items:center;gap:var(--s4);padding:var(--s4) 0;border-bottom:1px solid var(--line-2);cursor:pointer;user-select:none}
+.ci input{appearance:none;-webkit-appearance:none;width:24px;height:24px;border:1.5px solid var(--ink-3);border-radius:7px;flex-shrink:0;cursor:pointer;position:relative;transition:.15s var(--ease)}
+.ci input:checked{background:var(--gold);border-color:var(--gold)}
+.ci input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--on-gold);font-weight:700;font-size:15px}
+.ci input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.ci .txt{flex:1;font-size:var(--t-body);color:var(--ink)}
+.ci input:checked + .txt{color:var(--ink-3);text-decoration:line-through}
+.ci .tag2{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);font-weight:600;white-space:nowrap}
+.reset{margin-top:var(--s5);font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.12em;font-weight:600;background:none;border:1px solid var(--line);color:var(--ink-2);padding:var(--s3) var(--s5);border-radius:100px;cursor:pointer;transition:.2s var(--ease)}
+.reset:hover{border-color:var(--gold);color:var(--gold)}
+
+footer{border-top:1px solid var(--line);padding:var(--s7) 0 var(--s8)}
+.foot-top{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s4);flex-wrap:wrap;margin-bottom:var(--s4)}
+.foot-top .wm{font-family:var(--display);font-weight:800;font-size:1.05rem;text-transform:uppercase}.foot-top .wm span{color:var(--gold)}
+.foot-top .meta{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);font-weight:600}
+.disclaimer{font-size:var(--t-xs);line-height:1.65;color:var(--ink-3);border-top:1px solid var(--line-2);padding-top:var(--s4)}.disclaimer b{color:var(--ink-2)}
+
+/* tracker */
+.trk-now{display:flex;gap:var(--s7);flex-wrap:wrap;margin-top:var(--s2)}
+.trk-now .k{display:block;font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);font-weight:600}
+.trk-now .big{font-family:var(--display);font-weight:700;font-size:1.8rem;line-height:1.25}
+.trk-now .big.g{color:var(--gold)}
+.inrow{display:flex;gap:var(--s3);margin-top:var(--s5)}
+.inrow input{flex:1;min-width:0;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:var(--s3) var(--s4);font-family:var(--body);font-size:var(--t-body)}
+.inrow input::placeholder{color:var(--ink-3)}
+.inrow input:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-color:var(--gold)}
+.btn-gold{background:var(--gold);color:var(--on-gold);border:0;border-radius:10px;padding:var(--s3) var(--s5);font-family:var(--display);font-weight:700;font-size:var(--t-sm);cursor:pointer;white-space:nowrap}
+.btn-gold.full{width:100%;margin-top:var(--s5);padding:var(--s4)}
+.btn-gold.done{background:var(--bg-3);color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.entries{list-style:none;margin-top:var(--s5)}
+.entries li{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);padding:var(--s3) 0;border-bottom:1px solid var(--line-2);font-size:var(--t-sm);color:var(--ink-2)}
+.entries li:last-child{border-bottom:0}
+.entries li b{color:var(--ink);font-family:var(--display);font-weight:600;font-size:1rem}
+.entries .x{background:none;border:0;color:var(--ink-3);cursor:pointer;font-size:1.1rem;line-height:1;padding:0 var(--s2)}
+.entries .empty{color:var(--ink-3);border:0;font-style:italic}
+.streak{display:flex;align-items:center;gap:var(--s4);margin-top:var(--s2)}
+.streak .flame{font-family:var(--display);font-weight:800;font-size:3.2rem;color:var(--gold);line-height:1}
+.streak-meta b{font-family:var(--display);font-weight:600;font-size:1rem;color:var(--ink)}
+.streak-meta .sub{display:block;font-size:var(--t-sm);color:var(--ink-3);margin-top:2px}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:var(--s6)}
+.dots span{width:22px;height:22px;border-radius:6px;background:var(--bg-3);border:1px solid var(--line)}
+.dots span.on{background:var(--gold);border-color:var(--gold)}
+.hint{font-size:var(--t-sm);color:var(--ink-3);margin-top:var(--s3)}
+.accent-row{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s6);flex-wrap:wrap}
+.accent-row .k{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);font-weight:600;margin-right:var(--s2)}
+.sw{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);background:var(--c);cursor:pointer;padding:0;transition:transform .15s var(--ease)}
+.sw:hover{transform:scale(1.12)}
+.sw.active{border-color:var(--ink);box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--c)}
+.photos{margin-top:var(--s7)}
+.photo-add{display:inline-block;margin-top:var(--s4);cursor:pointer}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:var(--s3);margin-top:var(--s5)}
+.photo-item{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;background:var(--bg-2)}
+.photo-item img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block}
+.photo-item .pd{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,oklch(8% 0 0/.85));color:#fff;font-size:var(--t-xs);padding:var(--s5) var(--s2) var(--s2);font-weight:600}
+.photo-item .pdel{position:absolute;top:5px;right:5px;background:oklch(8% 0 0/.6);color:#fff;border:0;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:14px;line-height:22px;padding:0}
+.lightbox{position:fixed;inset:0;z-index:100;background:oklch(7% 0 0/.93);display:none;align-items:center;justify-content:center;padding:var(--s5)}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:86vh;border-radius:12px}
+.lb-close{position:absolute;top:var(--s5);right:var(--s6);background:none;border:0;color:#fff;font-size:2.4rem;cursor:pointer;line-height:1}
+.sync{margin-top:var(--s7);border:1px solid var(--line);border-radius:14px;padding:var(--s4) var(--s5);background:var(--bg-2)}
+.sync summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:var(--t-sm);color:var(--ink);list-style:none}
+.sync summary::-webkit-details-marker{display:none}
+.sync[open] summary{margin-bottom:var(--s2)}
+.sync textarea{width:100%;margin-top:var(--s3);background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:var(--body);font-size:var(--t-sm);padding:var(--s3);resize:vertical}
+.sync .inrow{margin-top:var(--s3)}
+
+.rv{opacity:0;transform:translateY(16px);transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:720px){
+  .cols2,.cols3,.levers{grid-template-columns:1fr;gap:var(--s6)}
+  .lever{padding:var(--s5) 0 0;border-left:0;border-top:1px solid var(--line)}
+  .lever:first-child{padding-top:0;border-top:0}
+  .ledger{grid-template-columns:1fr 1fr}
+  .week{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .phase{grid-template-columns:1fr;gap:var(--s1)}
+  .pill a{display:none}
+  .menu-btn{display:flex;margin-left:auto}
+  section{padding:var(--s7) 0}
+  .trk-now{gap:var(--s6)}
+}
+/* premium UX: toast · fab · confetti · bottom bar */
+#toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,16px);z-index:110;background:var(--ink);color:var(--bg);font-family:var(--display);font-weight:600;font-size:var(--t-sm);padding:var(--s3) var(--s5);border-radius:100px;opacity:0;pointer-events:none;white-space:nowrap;box-shadow:0 14px 34px -12px oklch(0% 0 0/.55);transition:opacity .25s var(--ease),transform .25s var(--ease)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.fab{position:fixed;right:var(--s5);bottom:var(--s5);z-index:70;width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--on-gold);border:0;cursor:pointer;font-size:1.3rem;line-height:1;box-shadow:0 12px 30px -10px oklch(0% 0 0/.6);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s var(--ease),transform .25s var(--ease),visibility .25s}
+.fab.show{opacity:1;visibility:visible;transform:none}
+.fab:active{transform:translateY(1px)}
+#confetti{position:fixed;inset:0;z-index:120;pointer-events:none}
+#confetti i{position:absolute;width:9px;height:9px;border-radius:2px;opacity:0;transform:translate(-50%,-50%);animation:pop .9s var(--ease) forwards}
+@keyframes pop{0%{opacity:1;transform:translate(-50%,-50%) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r))}}
+.bottombar{display:none}
+@media(max-width:720px){
+  .bottombar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:75;background:oklch(15% 0.012 64 / .93);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px var(--s4) calc(6px + env(safe-area-inset-bottom,0px))}
+  html[data-theme="light"] .bottombar{background:oklch(96.5% 0.008 85 / .95)}
+  .bottombar a,.bottombar button{flex:1;background:none;border:0;color:var(--ink-2);font-family:var(--body);font-weight:600;font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:var(--s2) 0;cursor:pointer}
+  .bottombar .ic{font-size:1.1rem;line-height:1}
+  body{padding-bottom:62px}
+  .fab{bottom:74px;width:42px;height:42px}
+}
+@media(prefers-reduced-motion:reduce){.rv{transition:opacity .15s linear;transform:none}html{scroll-behavior:auto}#confetti{display:none}}
+</style>
+</head>
+<body>
+<div class="atmos"><div class="glow"></div><div class="vig"></div><div class="grain"></div></div>
+<div class="readbar"><i id="readbar"></i></div>
+
+<nav>
+  <div class="pill">
+    <span class="nm">ASCEND</span>
+    <a href="#track">Track</a><a href="#day">Day</a><a href="#truth">Truth</a><a href="#phases">Phases</a><a href="#fuel">Fuel</a><a href="#train">Train</a><a href="#mind">Mind</a><a href="#skin">Skin</a><a href="#hair">Hair</a><a href="#teeth">Teeth</a><a href="#height">Height</a><a href="#labs">Labs</a><a href="#daily">Daily</a>
+    <button class="mode" id="modeBtn" aria-label="Toggle light or dark mode" title="Light / dark">🌙</button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</nav>
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-panel">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">×</button>
+    <div class="menu-links">
+      <a href="#track">Track</a><a href="#day">Day</a><a href="#truth">Truth</a><a href="#phases">Phases</a><a href="#fuel">Fuel</a><a href="#train">Train</a><a href="#mind">Mind</a><a href="#skin">Skin</a><a href="#hair">Hair</a><a href="#teeth">Teeth</a><a href="#height">Height</a><a href="#labs">Labs</a><a href="#daily">Daily</a>
+    </div>
+  </div>
+</div>
+
+<header><div class="wrap">
+  <div class="eyebrow rv">Field Manual · For Naimul</div>
+  <h1 class="hero rv">Project<span class="l2">Ascend</span></h1>
+  <p class="hero-sub rv">Get lean, sharp and healthy — <b>for good.</b> No crash, no rebound.</p>
+  <div class="ledger rv">
+    <div class="c"><div class="k">Start</div><div class="v"><span class="cnt" data-to="95">95</span><span style="font-size:.5em">kg</span></div><div class="u">today</div></div>
+    <div class="c"><div class="k">Month 4</div><div class="v g">~<span class="cnt" data-to="76">76</span><span style="font-size:.5em">kg</span></div><div class="u">visible change</div></div>
+    <div class="c"><div class="k">Target</div><div class="v"><span class="cnt" data-to="57">57</span><span style="font-size:.5em">kg</span></div><div class="u">~8–10 mo</div></div>
+    <div class="c"><div class="k">Fuel</div><div class="v"><span class="cnt" data-to="1800">1800</span><span style="font-size:.4em">kcal</span></div><div class="u">~150g protein</div></div>
+  </div>
+  <div class="scale rv">
+    <div class="lbl"><span>Progress</span><span>95 → 57 kg</span></div>
+    <div class="track"><i id="bar"></i></div>
+    <div class="ticks"><span>95</span><span>86</span><span>76</span><span>66</span><span>57</span></div>
+  </div>
+</div></header>
+
+<section id="track"><div class="wrap">
+  <div class="tag rv">★ Daily Dashboard</div>
+  <h2 class="rv">Your Tracker</h2>
+  <p class="lead rv">Log it or it didn't happen. Saves on this device.</p>
+  <div class="accent-row rv">
+    <span class="k">Accent</span>
+    <button class="sw" data-acc="gold" title="Gold" style="--c:oklch(82% 0.135 80)"></button>
+    <button class="sw" data-acc="crimson" title="Crimson" style="--c:oklch(63% 0.21 27)"></button>
+    <button class="sw" data-acc="ice" title="Ice" style="--c:oklch(80% 0.12 230)"></button>
+    <button class="sw" data-acc="emerald" title="Emerald" style="--c:oklch(75% 0.15 160)"></button>
+  </div>
+  <div class="cols2">
+    <div class="rv">
+      <h3>Weight</h3>
+      <div class="trk-now">
+        <div><span class="k">Now</span><span class="big" id="wNow">—</span></div>
+        <div><span class="k">Lost</span><span class="big g" id="wLost">—</span></div>
+        <div><span class="k">To go</span><span class="big" id="wTogo">—</span></div>
+      </div>
+      <div class="track" style="margin-top:var(--s5)"><i id="wbar"></i></div>
+      <div class="ticks"><span>95</span><span>76</span><span>57</span></div>
+      <div class="inrow">
+        <input id="wInput" type="number" inputmode="decimal" step="0.1" min="30" max="200" placeholder="Weight (kg)" />
+        <button class="btn-gold" id="wLog">Log</button>
+      </div>
+      <ul class="entries" id="wList"></ul>
+      <div class="waist-block">
+        <h3 style="margin-top:var(--s6)">Waist</h3>
+        <div class="trk-now">
+          <div><span class="k">Now</span><span class="big" id="waNow">—</span></div>
+          <div><span class="k">Change</span><span class="big g" id="waChg">—</span></div>
+        </div>
+        <div class="inrow">
+          <input id="waInput" type="number" inputmode="decimal" step="0.1" min="15" max="80" placeholder="Waist (inches)" />
+          <button class="btn-gold" id="waLog">Log</button>
+        </div>
+        <ul class="entries" id="waList"></ul>
+      </div>
+    </div>
+    <div class="rv">
+      <h3>Daily streak</h3>
+      <div class="streak">
+        <div class="flame" id="streakN">0</div>
+        <div class="streak-meta"><b id="streakLbl">day streak</b><span class="sub" id="totalDays">0 days total</span></div>
+      </div>
+      <button class="btn-gold full" id="dayBtn">✓ Hit my non-negotiables today</button>
+      <div class="dots" id="dots"></div>
+      <p class="hint">Last 14 days. Keep the chain alive.</p>
+      <div class="photos">
+        <h3>Progress photos</h3>
+        <p class="hint">Same pose, same light, monthly. Stays on this device.</p>
+        <label class="photo-add btn-gold">+ Add photo<input type="file" id="photoIn" accept="image/*" hidden></label>
+        <div class="photo-grid" id="photoGrid"></div>
+      </div>
+    </div>
+  </div>
+  <details class="sync rv">
+    <summary>⇄ Sync phone &amp; PC</summary>
+    <p class="hint">Tap Export, copy the code, paste on your other device, tap Import. (Photos don't transfer.)</p>
+    <textarea id="syncBox" rows="3" placeholder="Backup code appears here — or paste one to import"></textarea>
+    <div class="inrow">
+      <button class="reset" id="expBtn">Export ↗</button>
+      <button class="reset" id="impBtn">Import ↘</button>
+    </div>
+  </details>
+</div></section>
+
+<section id="day"><div class="wrap">
+  <div class="tag rv">⏱ Your Day</div>
+  <h2 class="rv">Daily Schedule</h2>
+  <p class="lead rv">What to do, when. One glance = sorted.</p>
+  <div class="rv">
+    <div class="phase"><div class="pn">AM<small>9–11</small></div><div><h4>Wake up</h4><p>Sunscreen · breakfast (3 eggs + roti) · big glass of water.</p></div></div>
+    <div class="phase"><div class="pn">Day<small>study</small></div><div><h4>Study &amp; eat right</h4><p>Water before meals · lunch: protein + veg first, then 180g rice · afternoon snack.</p></div></div>
+    <div class="phase"><div class="pn">PM<small>evening</small></div><div><h4>Dinner + walk</h4><p>Lighter dinner · 10-min walk after · night skin routine.</p></div></div>
+    <div class="phase"><div class="pn">1AM<small>Sat·Mon·Wed</small></div><div><h4>Workout</h4><p>25-min bodyweight session, door closed, in peace. Other nights: rest.</p></div></div>
+    <div class="phase" style="border-left:0"><div class="pn">Bed<small>after</small></div><div><h4>Wind down</h4><p>Log your streak · phone across the room · lights out.</p></div></div>
+  </div>
+</div></section>
+
+<section id="truth"><div class="wrap">
+  <div class="tag rv"><span class="num">01</span> · Core</div>
+  <h2 class="rv">Three Levers Run Everything</h2>
+  <p class="lead rv">Lean, jaw, taller, testosterone, skin — all come from <b>3 levers.</b> Pull them daily.</p>
+  <div class="levers rv">
+    <div class="lever"><div class="rn">01</div><h4>Sleep</h4><p>Burns fat, raises testosterone + growth hormone, clears skin. Your 3am phone kills it. <b>Fix this first.</b></p></div>
+    <div class="lever"><div class="rn">02</div><h4>Food</h4><p>Portions + protein, not junk. Control rice, eat protein — the hunger dies.</p></div>
+    <div class="lever"><div class="rn">03</div><h4>Move</h4><p>Bodyweight keeps muscle, walking burns fat. Start tiny.</p></div>
+  </div>
+  <div class="note good rv"><b>One rule:</b> hit your non-negotiables daily. Miss one? Go again tomorrow. Streak &gt; perfect.</div>
+</div></section>
+
+<section id="phases"><div class="wrap">
+  <div class="tag rv"><span class="num">02</span> · Plan</div>
+  <h2 class="rv">Four Phases</h2>
+  <p class="lead rv">Stack habits. Each phase locks before the next.</p>
+  <div class="rv">
+    <div class="phase"><div class="pn">I<small>Wk 1–2</small></div><div><h4>Foundation</h4><p>Phone out of bed · protein-first plates · 10-min walk · sunscreen. No workout yet.</p></div></div>
+    <div class="phase"><div class="pn">II<small>Wk 3–8</small></div><div><h4>Build</h4><p>Full diet + 3 workouts/wk + daily walk. <b>→ ~83–86 kg.</b></p></div></div>
+    <div class="phase"><div class="pn">III<small>Mo 3–4</small></div><div><h4>Momentum</h4><p>Push harder, posture work, get bloodwork. <b>→ ~76 kg.</b></p></div></div>
+    <div class="phase" style="border-left:0"><div class="pn">IV<small>Mo 5–10</small></div><div><h4>Finish</h4><p>Stay consistent. <b>→ 57 kg, lean.</b></p></div></div>
+  </div>
+</div></section>
+
+<section id="fuel"><div class="wrap">
+  <div class="tag rv"><span class="num">03</span> · Fuel</div>
+  <h2 class="rv">The Diet</h2>
+  <p class="lead rv">Your house food. Weigh it <b>cooked.</b> ~1800 kcal, ~150g protein.</p>
+  <div class="macros rv"><span>Protein<b>~150g</b></span><span>Carbs<b>~150g</b></span><span>Fat<b>~55g</b></span><span>Kcal<b>~1800</b></span></div>
+  <div class="rv">
+    <div class="meal"><div class="mh"><b>Breakfast</b><span class="cal">~330 · 28g P</span></div>
+      <div class="row"><span>Eggs (boiled/omelette)</span><span class="amt">3</span></div>
+      <div class="row"><span>Roti</span><span class="amt">1 (~50g)</span></div>
+      <div class="row"><span>Cha — no sugar</span><span class="amt">1 cup</span></div></div>
+    <div class="meal"><div class="mh"><b>Lunch</b><span class="cal">~680 · 48g P</span></div>
+      <div class="row"><span>Rice</span><span class="amt">180g</span></div>
+      <div class="row"><span>Chicken (easy on oil)</span><span class="amt">160g</span></div>
+      <div class="row"><span>Daal</span><span class="amt">120g</span></div>
+      <div class="row"><span>Salad / veg first</span><span class="amt">free</span></div></div>
+    <div class="meal"><div class="mh"><b>Snack</b><span class="cal">~230 · 16g P</span></div>
+      <div class="row"><span>Doi or 2 boiled eggs</span><span class="amt">150g</span></div>
+      <div class="row"><span>Fruit</span><span class="amt">1</span></div></div>
+    <div class="meal"><div class="mh"><b>Dinner</b><span class="cal">~520 · 42g P</span></div>
+      <div class="row"><span>Rice or 2 roti</span><span class="amt">120g</span></div>
+      <div class="row"><span>Fish or chicken</span><span class="amt">160g</span></div>
+      <div class="row"><span>Daal / veg</span><span class="amt">100g</span></div></div>
+  </div>
+  <div class="cols2" style="margin-top:var(--s7)">
+    <div class="rv"><h3>Rules</h3><ul class="list">
+      <li><b>Protein + veg first,</b> rice last.</li>
+      <li>Water before every meal.</li>
+      <li>Cha: keep 1–2, <b>zero sugar.</b></li>
+      <li>Nothing after dinner.</li>
+      <li>1 cheat meal/week — planned.</li></ul></div>
+    <div class="rv"><h3>Adjust</h3><ul class="list">
+      <li>Weigh weekly, same time.</li>
+      <li>Down 0.5–1 kg/wk? Don't change anything.</li>
+      <li>Stalled 2 wks? Cut 40g rice or add a walk.</li>
+      <li>Dizzy / flat? Eat 200 kcal more.</li>
+      <li>Hungry? Add veg, water, eggs.</li></ul></div>
+  </div>
+  <div class="note warn rv"><b>Not a crash diet.</b> Never below 1500 kcal — it kills testosterone, growth and mood.</div>
+</div></section>
+
+<section id="train"><div class="wrap">
+  <div class="tag rv"><span class="num">04</span> · Train</div>
+  <h2 class="rv">No Gym Needed</h2>
+  <p class="lead rv">Bodyweight + walking. Keep muscle while fat drops. Can't do a full push-up? Do them on your knees.</p>
+  <div class="week rv">
+    <div class="wd train"><div class="d">Sat</div><div class="a">A</div></div>
+    <div class="wd"><div class="d">Sun</div><div class="a">Walk</div></div>
+    <div class="wd train"><div class="d">Mon</div><div class="a">B</div></div>
+    <div class="wd"><div class="d">Tue</div><div class="a">Walk</div></div>
+    <div class="wd train"><div class="d">Wed</div><div class="a">A</div></div>
+    <div class="wd"><div class="d">Thu</div><div class="a">Walk</div></div>
+    <div class="wd"><div class="d">Fri</div><div class="a">Rest</div></div>
+  </div>
+  <div class="cols2">
+    <div class="rv"><h3>Workout A</h3>
+      <div class="exrow"><span><b>Incline push-ups</b></span><span class="s">3 × 8–12</span></div>
+      <div class="exrow"><span><b>Squats</b></span><span class="s">3 × 15</span></div>
+      <div class="exrow"><span><b>Glute bridges</b></span><span class="s">3 × 15</span></div>
+      <div class="exrow"><span><b>Superman</b></span><span class="s">3 × 20s</span></div>
+      <div class="exrow"><span><b>Plank</b></span><span class="s">3 × 20–40s</span></div></div>
+    <div class="rv"><h3>Workout B</h3>
+      <div class="exrow"><span><b>Reverse lunges</b></span><span class="s">3 × 10/leg</span></div>
+      <div class="exrow"><span><b>Wide push-ups</b></span><span class="s">3 × 8–12</span></div>
+      <div class="exrow"><span><b>Wall sit</b></span><span class="s">3 × 30–45s</span></div>
+      <div class="exrow"><span><b>Bird-dog</b></span><span class="s">3 × 10/side</span></div>
+      <div class="exrow"><span><b>Dead bug</b></span><span class="s">3 × 10/side</span></div></div>
+  </div>
+  <div style="margin-top:var(--s6)" class="rv"><h3>Cardio</h3><ul class="list">
+    <li>Wk 1–2: 10-min walk after dinner.</li>
+    <li>Wk 3+: 7–10k steps/day.</li>
+    <li>Rest 45–60s. +1–2 reps when easy.</li>
+    <li>Warm up 3 min. No jumping early.</li></ul></div>
+  <div class="note warn rv"><b>1am training</b> + 3am sleep kills recovery + testosterone. Train before 9pm if you can.</div>
+</div></section>
+
+<section id="mind"><div class="wrap">
+  <div class="tag rv"><span class="num">05</span> · Mind</div>
+  <h2 class="rv">Dopamine Rewire</h2>
+  <p class="lead rv">Reels, porn, nails = cheap dopamine on autopilot. <b>Add friction, replace it.</b> No shame.</p>
+  <div class="rv"><h3>Reels</h3><ul class="list">
+    <li>Watch one 10-min+ video daily to rebuild focus.</li>
+    <li>Log out, bury the app, 45-min timer.</li>
+    <li>Grayscale your phone.</li>
+    <li>Reels only after dinner, 20 min.</li>
+    <li><b>No phone in bed.</b></li></ul></div>
+  <div class="cols2" style="margin-top:var(--s6)">
+    <div class="rv"><h3>Porn</h3><ul class="list">
+      <li>Masturbation isn't harmful. "Nofap superpowers" is a myth.</li>
+      <li>The real issue = the compulsive loop.</li>
+      <li>Phone out of bed; blocker if you want.</li>
+      <li>Urge? 10-min timer, do something else.</li>
+      <li>Reduce — don't go zero overnight.</li></ul></div>
+    <div class="rv"><h3>Nails</h3><ul class="list">
+      <li>Trim + file smooth.</li>
+      <li>Bitter anti-bite polish.</li>
+      <li>Give your hands a fidget.</li>
+      <li>Spot your trigger, guard it.</li></ul></div>
+  </div>
+  <div class="note good rv"><b>Real dopamine:</b> workouts, sun, study wins, real talk. Stack those.</div>
+</div></section>
+
+<section id="skin"><div class="wrap">
+  <div class="tag rv"><span class="num">06</span> · Skin</div>
+  <h2 class="rv">Clear &amp; Even</h2>
+  <p class="lead rv">The tan + acne marks <b>reverse.</b> Goal: clear and even, not "fair".</p>
+  <div class="cols2">
+    <div class="rv"><h3>Morning</h3>
+      <div class="step"><span class="sn">1</span><div class="t">Wash — gentle, no scrub.</div></div>
+      <div class="step"><span class="sn">2</span><div class="t">Redeent emulsion, thin layer.</div></div>
+      <div class="step"><span class="sn">3</span><div class="t"><b>Sunscreen SPF 65.</b> Every morning. #1 thing.</div></div></div>
+    <div class="rv"><h3>Night</h3>
+      <div class="step"><span class="sn">1</span><div class="t">Wash.</div></div>
+      <div class="step"><span class="sn">2</span><div class="t">Kojic soap, 30–60s, <b>2–3 nights/wk only.</b></div></div>
+      <div class="step"><span class="sn">3</span><div class="t">Redeent emulsion other nights.</div></div></div>
+  </div>
+  <div style="margin-top:var(--s6)" class="rv"><ul class="list">
+    <li><b>Never pick or pop.</b></li>
+    <li>One new product at a time.</li>
+    <li>Less sugar = less acne.</li>
+    <li>Going harder? Adapalene (Differin), 2–3 nights/wk.</li>
+    <li>Sunscreen is mandatory with kojic/adapalene.</li></ul>
+    <div class="note good">Bad or cystic acne → see a dermatologist (cheap here).</div></div>
+</div></section>
+
+<section id="hair"><div class="wrap">
+  <div class="tag rv"><span class="num">07</span> · Hair</div>
+  <h2 class="rv">Healthy &amp; Full</h2>
+  <p class="lead rv">Already good — just keep it healthy, don't damage it.</p>
+  <div class="cols2">
+    <div class="rv"><h3>Routine</h3><ul class="list">
+      <li>Nizoral 2×/wk, leave 3–5 min.</li>
+      <li>Conditioner: ends only, not scalp.</li>
+      <li>Serum + oil 3–4 nights, wash out AM.</li>
+      <li>Rosemary tonic daily.</li>
+      <li>Hair pack 1×/wk.</li></ul></div>
+    <div class="rv"><h3>From inside</h3><ul class="list">
+      <li>Protein (your diet covers it).</li>
+      <li>Iron, zinc, vit D — test checks ferritin.</li>
+      <li>Sleep.</li>
+      <li>Don't over-wash or use high heat.</li></ul></div>
+  </div>
+</div></section>
+
+<section id="teeth"><div class="wrap">
+  <div class="tag rv"><span class="num">08</span> · Teeth</div>
+  <h2 class="rv">White &amp; Clean</h2>
+  <p class="lead rv">Mostly removing stains + tartar, not bleaching.</p>
+  <div class="cols2">
+    <div class="rv"><h3>Do</h3><ul class="list">
+      <li>Brush 2×/day, 2 min, soft brush, fluoride.</li>
+      <li>Floss + scrape tongue.</li>
+      <li>Rinse after cha/cola.</li>
+      <li>Whitening toothpaste 3–4×/wk.</li>
+      <li><b>Dentist scaling</b> — the real whitener.</li></ul></div>
+    <div class="rv"><h3>Never</h3><ul class="list">
+      <li>No lemon, baking soda, charcoal — strips enamel.</li>
+      <li>Don't over-brush hard.</li></ul></div>
+  </div>
+</div></section>
+
+<section id="height"><div class="wrap">
+  <div class="tag rv"><span class="num">09</span> · Height</div>
+  <h2 class="rv">Maximize &amp; Look Taller</h2>
+  <p class="lead rv">Maybe some growth left (late puberty). Protect it + look taller now.</p>
+  <div class="cols3">
+    <div class="rv"><h3>Protect</h3><ul class="list">
+      <li>Sleep = growth hormone.</li>
+      <li>Protein, calcium, vit D.</li>
+      <li>See a doctor re: late puberty.</li></ul></div>
+    <div class="rv"><h3>Look taller</h3><ul class="list">
+      <li><b>Posture</b> — biggest instant win.</li>
+      <li>Get lean.</li>
+      <li>Stretch chest + hip flexors.</li>
+      <li>Fitted clothes, vertical lines.</li></ul></div>
+    <div class="rv"><h3>Never</h3><ul class="list">
+      <li>No surgery.</li>
+      <li>No height pills / hormones.</li>
+      <li>Short ≠ over.</li></ul></div>
+  </div>
+</div></section>
+
+<section id="labs"><div class="wrap">
+  <div class="tag rv"><span class="num">10</span> · Labs</div>
+  <h2 class="rv">Get Your Baseline</h2>
+  <p class="lead rv">Never had bloodwork. Cheap here. Ask your parents + a doctor for:</p>
+  <div class="cols2 rv">
+    <ul class="list">
+      <li>Glucose + HbA1c</li>
+      <li>Fasting insulin</li>
+      <li>Lipid profile</li>
+      <li>TSH + free T4</li>
+      <li>Testosterone, LH, FSH</li>
+    </ul>
+    <ul class="list">
+      <li>Vitamin D</li>
+      <li>CBC</li>
+      <li>Ferritin</li>
+      <li>Liver (ALT/AST)</li>
+    </ul>
+  </div>
+  <div class="note warn rv"><b>A doctor reads these.</b> Never self-medicate or buy hormones.</div>
+</div></section>
+
+<div class="pull"><div class="wrap"><p class="rv">You did it once.<br>Now do it <span class="em">for keeps.</span></p></div></div>
+
+<section id="daily"><div class="wrap">
+  <div class="tag rv"><span class="num">11</span> · Daily</div>
+  <h2 class="rv">Non-Negotiables</h2>
+  <p class="lead rv">Busy day? Just hit these.</p>
+  <div class="check rv" id="checklist">
+    <label class="ci"><input type="checkbox" data-k="sun"><span class="txt">Sunscreen on</span><span class="tag2">Skin</span></label>
+    <label class="ci"><input type="checkbox" data-k="protein"><span class="txt">Protein + veg first</span><span class="tag2">Food</span></label>
+    <label class="ci"><input type="checkbox" data-k="rice"><span class="txt">Rice grams — no extra plate</span><span class="tag2">Food</span></label>
+    <label class="ci"><input type="checkbox" data-k="water"><span class="txt">Water before meals · 2.5–3 L</span><span class="tag2">Food</span></label>
+    <label class="ci"><input type="checkbox" data-k="walk"><span class="txt">Walked / hit steps</span><span class="tag2">Move</span></label>
+    <label class="ci"><input type="checkbox" data-k="train"><span class="txt">Workout (training days)</span><span class="tag2">Move</span></label>
+    <label class="ci"><input type="checkbox" data-k="phone"><span class="txt">Phone out of bed</span><span class="tag2">Sleep</span></label>
+    <label class="ci"><input type="checkbox" data-k="sleep"><span class="txt">In bed earlier</span><span class="tag2">Sleep</span></label>
+    <label class="ci"><input type="checkbox" data-k="skin"><span class="txt">Night skin routine</span><span class="tag2">Skin</span></label>
+    <label class="ci"><input type="checkbox" data-k="reels"><span class="txt">Reels in my window</span><span class="tag2">Mind</span></label>
+    <label class="ci"><input type="checkbox" data-k="nopick"><span class="txt">No picking / nail biting</span><span class="tag2">Mind</span></label>
+  </div>
+  <button class="reset" id="resetBtn">↻ Reset for a new day</button>
+</div></section>
+
+<div class="lightbox" id="lightbox"><button class="lb-close" id="lbClose">×</button><img id="lightImg" alt="progress photo" /></div>
+
+<div id="toast"></div>
+<div id="confetti"></div>
+<button class="fab" id="fab" aria-label="Back to top">↑</button>
+<div class="bottombar">
+  <button data-top><span class="ic">↑</span>Top</button>
+  <a href="#track"><span class="ic">📉</span>Track</a>
+  <a href="#daily"><span class="ic">✓</span>Daily</a>
+  <button id="bbMenu"><span class="ic">☰</span>Menu</button>
+</div>
+
+<footer><div class="wrap">
+  <div class="foot-top">
+    <div class="wm">PROJECT <span>ASCEND</span></div>
+    <div class="meta">For Naimul · by Coach</div>
+  </div>
+  <p class="disclaimer">Coaching, not medical advice. You're young — check with your parents + a doctor before starting (especially testosterone/puberty and acne meds). No crash diets, no hormones, no risky height hacks.</p>
+</div></footer>
+
+<script>
+  (function(){var s=95,t=57,c=95,p=Math.max(4,Math.min(100,((s-c)/(s-t))*100));var b=document.getElementById('bar');if(b)b.style.width=p+'%';})();
+  (function(){var bx=document.querySelectorAll('#checklist input[type=checkbox]');bx.forEach(function(b){var k='opc3_'+b.dataset.k;try{if(localStorage.getItem(k)==='1')b.checked=true;}catch(e){}b.addEventListener('change',function(){try{localStorage.setItem(k,b.checked?'1':'0');}catch(e){}buzz();var all=true;bx.forEach(function(c){if(!c.checked)all=false;});if(all){confetti();toast('Day complete! 🔥');}});});var r=document.getElementById('resetBtn');if(r)r.addEventListener('click',function(){bx.forEach(function(b){b.checked=false;try{localStorage.setItem('opc3_'+b.dataset.k,'0');}catch(e){}});});})();
+  (function(){if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelectorAll('.rv').forEach(function(e){e.classList.add('in');});return;}var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target);}});},{threshold:.1});document.querySelectorAll('.rv').forEach(function(e){o.observe(e);});})();
+
+  function pad(n){return (n<10?'0':'')+n;}
+  function dstr(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+  function today(){return dstr(new Date());}
+  function load(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
+  function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
+  function fmt(ds){var p=ds.split('-');return p[2]+'/'+p[1];}
+  function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms||8);}catch(e){}}
+  var _tT;function toast(msg){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(_tT);_tT=setTimeout(function(){t.classList.remove('show');},1800);}
+  function confetti(){var c=document.getElementById('confetti');if(!c)return;c.innerHTML='';for(var i=0;i<24;i++){var s=document.createElement('i');s.style.setProperty('--x',((Math.random()*2-1)*180|0)+'px');s.style.setProperty('--y',(160+Math.random()*240|0)+'px');s.style.setProperty('--r',(Math.random()*360|0)+'deg');s.style.background=i%2?'var(--gold)':'var(--ember)';s.style.animationDelay=(Math.random()*.12).toFixed(2)+'s';c.appendChild(s);}setTimeout(function(){c.innerHTML='';},1400);}
+
+  /* weight */
+  (function(){
+    var wNow=document.getElementById('wNow'),wLost=document.getElementById('wLost'),wTogo=document.getElementById('wTogo'),
+        wbar=document.getElementById('wbar'),wList=document.getElementById('wList'),wInput=document.getElementById('wInput'),
+        wLog=document.getElementById('wLog'),heroBar=document.getElementById('bar'),START=95,GOAL=57;
+    function render(){
+      var arr=load('opc3_weights',[]);arr.sort(function(a,b){return a.d<b.d?-1:1;});
+      if(arr.length){var w=arr[arr.length-1].w,lost=START-w,togo=w-GOAL;
+        wNow.textContent=w+' kg';wLost.textContent=(lost>=0?'−':'+')+Math.abs(lost).toFixed(1)+' kg';
+        wTogo.textContent=togo>0?togo.toFixed(1)+' kg':'🎯';
+        var pct=Math.max(2,Math.min(100,((START-w)/(START-GOAL))*100));wbar.style.width=pct+'%';if(heroBar)heroBar.style.width=pct+'%';
+      }else{wNow.textContent='—';wLost.textContent='—';wTogo.textContent='—';wbar.style.width='4%';}
+      wList.innerHTML='';
+      if(!arr.length){var li=document.createElement('li');li.className='empty';li.textContent='No weigh-ins yet.';wList.appendChild(li);return;}
+      arr.slice(-6).reverse().forEach(function(e){var li=document.createElement('li'),s=document.createElement('span');s.textContent=fmt(e.d);var b=document.createElement('b');b.textContent=e.w+' kg';var x=document.createElement('button');x.className='x';x.textContent='×';x.addEventListener('click',function(){save('opc3_weights',load('opc3_weights',[]).filter(function(it){return it.d!==e.d;}));render();});var l=document.createElement('span');l.appendChild(s);li.appendChild(l);li.appendChild(b);li.appendChild(x);wList.appendChild(li);});
+    }
+    function log(){var v=parseFloat(wInput.value);if(isNaN(v)||v<30||v>250){wInput.focus();return;}var arr=load('opc3_weights',[]).filter(function(it){return it.d!==today();});arr.push({d:today(),w:Math.round(v*10)/10});save('opc3_weights',arr);wInput.value='';render();toast('Weight logged ✓');buzz();}
+    if(wLog)wLog.addEventListener('click',log);if(wInput)wInput.addEventListener('keydown',function(e){if(e.key==='Enter')log();});render();
+  })();
+
+  /* waist */
+  (function(){
+    var waNow=document.getElementById('waNow'),waChg=document.getElementById('waChg'),waIn=document.getElementById('waInput'),waLog=document.getElementById('waLog'),waList=document.getElementById('waList');
+    function render(){var arr=load('opc3_waist',[]);arr.sort(function(a,b){return a.d<b.d?-1:1;});
+      if(arr.length){var now=arr[arr.length-1].w,base=arr[0].w,chg=base-now;waNow.textContent=now+'″';waChg.textContent=arr.length>1?((chg>=0?'−':'+')+Math.abs(chg).toFixed(1)+'″'):'baseline';}else{waNow.textContent='—';waChg.textContent='—';}
+      waList.innerHTML='';arr.slice(-5).reverse().forEach(function(e){var li=document.createElement('li'),s=document.createElement('span');s.textContent=fmt(e.d);var b=document.createElement('b');b.textContent=e.w+'″';var x=document.createElement('button');x.className='x';x.textContent='×';x.addEventListener('click',function(){save('opc3_waist',load('opc3_waist',[]).filter(function(it){return it.d!==e.d;}));render();});var l=document.createElement('span');l.appendChild(s);li.appendChild(l);li.appendChild(b);li.appendChild(x);waList.appendChild(li);});}
+    function log(){var v=parseFloat(waIn.value);if(isNaN(v)||v<15||v>80){waIn.focus();return;}var arr=load('opc3_waist',[]).filter(function(it){return it.d!==today();});arr.push({d:today(),w:Math.round(v*10)/10});save('opc3_waist',arr);waIn.value='';render();toast('Waist logged ✓');buzz();}
+    if(waLog)waLog.addEventListener('click',log);if(waIn)waIn.addEventListener('keydown',function(e){if(e.key==='Enter')log();});if(waNow)render();
+  })();
+
+  /* streak */
+  (function(){
+    var streakN=document.getElementById('streakN'),streakLbl=document.getElementById('streakLbl'),totalDays=document.getElementById('totalDays'),dayBtn=document.getElementById('dayBtn'),dots=document.getElementById('dots');
+    function render(){var days=load('opc3_days',[]),set={};days.forEach(function(d){set[d]=1;});var s=0,d=new Date();while(set[dstr(d)]){s++;d.setDate(d.getDate()-1);}streakN.textContent=s;streakLbl.textContent=s===1?'day streak 🔥':'day streak'+(s>1?' 🔥':'');totalDays.textContent=days.length+' day'+(days.length===1?'':'s')+' total';dots.innerHTML='';var t=new Date();for(var i=13;i>=0;i--){var dd=new Date(t);dd.setDate(t.getDate()-i);var sp=document.createElement('span');if(set[dstr(dd)])sp.className='on';dots.appendChild(sp);}var done=!!set[today()];dayBtn.classList.toggle('done',done);dayBtn.textContent=done?'✓ Logged — tap to undo':'✓ Hit my non-negotiables today';}
+    if(dayBtn)dayBtn.addEventListener('click',function(){var days=load('opc3_days',[]),ts=today();var was=days.indexOf(ts)>-1;if(was)days=days.filter(function(d){return d!==ts;});else days.push(ts);save('opc3_days',days);render();buzz();toast(was?'Unmarked':'Day logged 🔥');});if(streakN)render();
+  })();
+
+  /* progress photos */
+  (function(){
+    var grid=document.getElementById('photoGrid'),pin=document.getElementById('photoIn'),lb=document.getElementById('lightbox'),lim=document.getElementById('lightImg'),lc=document.getElementById('lbClose');
+    function render(){if(!grid)return;var arr=load('opc3_photos',[]);grid.innerHTML='';if(!arr.length){var e=document.createElement('p');e.className='hint';e.textContent='No photos yet.';grid.appendChild(e);return;}arr.forEach(function(p,idx){var d=document.createElement('div');d.className='photo-item';var img=document.createElement('img');img.src=p.src;img.alt=p.d;img.addEventListener('click',function(){if(lim&&lb){lim.src=p.src;lb.classList.add('open');}});var pd=document.createElement('div');pd.className='pd';pd.textContent=fmt(p.d);var del=document.createElement('button');del.className='pdel';del.textContent='×';del.addEventListener('click',function(ev){ev.stopPropagation();var a=load('opc3_photos',[]);a.splice(idx,1);save('opc3_photos',a);render();});d.appendChild(img);d.appendChild(pd);d.appendChild(del);grid.appendChild(d);});}
+    if(pin)pin.addEventListener('change',function(){var f=this.files&&this.files[0];if(!f)return;var self=this;var r=new FileReader();r.onload=function(ev){var im=new Image();im.onload=function(){var max=520,sc=Math.min(1,max/Math.max(im.width,im.height));var c=document.createElement('canvas');c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext('2d').drawImage(im,0,0,c.width,c.height);var arr=load('opc3_photos',[]);arr.push({d:today(),src:c.toDataURL('image/jpeg',0.72)});if(arr.length>12)arr=arr.slice(arr.length-12);try{save('opc3_photos',arr);render();toast('Photo added ✓');buzz();}catch(e){alert('Storage full — delete an old photo first.');}};im.src=ev.target.result;};r.readAsDataURL(f);self.value='';});
+    if(lb)lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open');});if(lc)lc.addEventListener('click',function(){lb.classList.remove('open');});render();
+  })();
+
+  /* nav: progress bar, scroll-spy, mobile jump */
+  (function(){
+    var rb=document.getElementById('readbar'),links=[].slice.call(document.querySelectorAll('.pill a')),map={};
+    links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+    function onScroll(){if(rb){var h=document.documentElement.scrollHeight-window.innerHeight;rb.style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';}}
+    window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+    var so=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('active');});if(map[e.target.id])map[e.target.id].classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
+    document.querySelectorAll('section[id]').forEach(function(s){so.observe(s);});
+    var mBtn=document.getElementById('menuBtn'),mOv=document.getElementById('menuOverlay'),mCl=document.getElementById('menuClose');
+    function closeM(){if(mOv){mOv.classList.remove('open');document.body.style.overflow='';}}
+    if(mBtn)mBtn.addEventListener('click',function(){if(mOv){mOv.classList.add('open');document.body.style.overflow='hidden';}});
+    if(mCl)mCl.addEventListener('click',closeM);
+    if(mOv)mOv.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeM);});
+    if(mOv)mOv.addEventListener('click',function(e){if(e.target===mOv)closeM();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM();});
+  })();
+
+  /* sync export / import (photos excluded) */
+  (function(){
+    var box=document.getElementById('syncBox'),exp=document.getElementById('expBtn'),imp=document.getElementById('impBtn');
+    function gather(){var o={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('opc3_')===0&&k!=='opc3_photos')o[k]=localStorage.getItem(k);}return o;}
+    if(exp)exp.addEventListener('click',function(){try{box.value=btoa(unescape(encodeURIComponent(JSON.stringify(gather()))));box.focus();box.select();}catch(e){}});
+    if(imp)imp.addEventListener('click',function(){try{var raw=(box.value||'').trim();if(!raw)return;var o=JSON.parse(decodeURIComponent(escape(atob(raw))));Object.keys(o).forEach(function(k){if(k.indexOf('opc3_')===0)localStorage.setItem(k,o[k]);});location.reload();}catch(e){box.value='Invalid code — re-copy from the other device.';}});
+  })();
+
+  /* accent + light/dark mode */
+  (function(){
+    var ACC={
+      gold:{dark:['oklch(82% 0.135 80)','oklch(68% 0.17 52)','oklch(20% 0.03 70)'],light:['oklch(58% 0.14 65)','oklch(52% 0.16 48)','oklch(98% 0.02 80)']},
+      crimson:{dark:['oklch(63% 0.21 27)','oklch(55% 0.20 30)','oklch(97% 0.02 30)'],light:['oklch(54% 0.22 27)','oklch(47% 0.21 28)','oklch(98% 0.02 30)']},
+      ice:{dark:['oklch(80% 0.12 230)','oklch(68% 0.15 245)','oklch(20% 0.03 240)'],light:['oklch(50% 0.16 245)','oklch(45% 0.16 250)','oklch(98% 0.02 240)']},
+      emerald:{dark:['oklch(75% 0.15 160)','oklch(64% 0.16 162)','oklch(16% 0.04 160)'],light:['oklch(47% 0.15 162)','oklch(42% 0.15 162)','oklch(98% 0.02 160)']}
+    };
+    var mode='dark',acc='gold';
+    try{mode=localStorage.getItem('opc3_mode')||'dark';acc=localStorage.getItem('opc3_accent')||'gold';}catch(e){}
+    var sws=document.querySelectorAll('.sw'),mb=document.getElementById('modeBtn');
+    function apply(){document.documentElement.setAttribute('data-theme',mode);var a=(ACC[acc]||ACC.gold)[mode],r=document.documentElement.style;r.setProperty('--gold',a[0]);r.setProperty('--ember',a[1]);r.setProperty('--on-gold',a[2]);sws.forEach(function(b){b.classList.toggle('active',b.dataset.acc===acc);});if(mb)mb.textContent=mode==='light'?'☀':'🌙';}
+    apply();
+    sws.forEach(function(b){b.addEventListener('click',function(){acc=b.dataset.acc;try{localStorage.setItem('opc3_accent',acc);}catch(e){}apply();});});
+    if(mb)mb.addEventListener('click',function(){mode=mode==='light'?'dark':'light';try{localStorage.setItem('opc3_mode',mode);}catch(e){}apply();buzz();});
+  })();
+
+  /* count-up stats */
+  (function(){
+    function run(){document.querySelectorAll('.cnt').forEach(function(el){if(el.dataset.done)return;el.dataset.done='1';var to=parseInt(el.dataset.to,10),st=null,dur=950;function step(t){if(!st)st=t;var p=Math.min(1,(t-st)/dur);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
+    if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var l=document.querySelector('.ledger');if(!l)return;
+    var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){run();o.disconnect();}});},{threshold:.3});o.observe(l);
+  })();
+
+  /* back-to-top + bottom bar */
+  (function(){
+    var fab=document.getElementById('fab');
+    function onS(){if(fab)fab.classList.toggle('show',window.scrollY>600);}
+    window.addEventListener('scroll',onS,{passive:true});onS();
+    function top(){window.scrollTo({top:0,behavior:'smooth'});buzz();}
+    if(fab)fab.addEventListener('click',top);
+    document.querySelectorAll('.bottombar [data-top]').forEach(function(b){b.addEventListener('click',top);});
+    var bm=document.getElementById('bbMenu'),ov=document.getElementById('menuOverlay');
+    if(bm)bm.addEventListener('click',function(){if(ov){ov.classList.add('open');document.body.style.overflow='hidden';}buzz();});
+    document.querySelectorAll('.bottombar a').forEach(function(a){a.addEventListener('click',buzz);});
+  })();
+</script>
+</body>
+</html>
